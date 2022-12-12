@@ -1,0 +1,125 @@
+<nz-page-header nzTitle="Domain List">
+  <nz-page-header-extra>
+    <a (click)="router.navigate(['dashboard', 'domain-update'])">
+      <i nz-icon nzType="plus-circle"></i>
+      <span> New Domain</span>
+    </a>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<ng-container *ngIf="vm$ | async as vm">
+  <table-search
+    [searchText]="vm.pager.search"
+    (table_search)="search($event)"
+    (table_refresh)="refresh()"
+  ></table-search>
+
+  <nz-table
+    nzShowSizeChanger
+    nzSize="small"
+    [nzData]="vm.result"
+    [nzFrontPagination]="false"
+    [nzLoading]="vm.loading"
+    [nzTotal]="vm.total"
+    [nzPageSize]="vm.pager.pageSize"
+    [nzPageIndex]="vm.pager.pageIndex"
+    [nzShowSizeChanger]="false"
+    (nzQueryParams)="onQueryParamsChange($event)"
+  >
+    <thead>
+      <tr>
+        <th nzColumnKey="home" [nzSortFn]="true">Domain</th>
+        <th>Admin Email</th>
+        <th style="text-align: center">Links</th>
+        <th style="text-align: center">Active</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of vm.result">
+        <td>
+          <a [href]="data.home" target="_blank">{{ data.home | domainName }}</a>
+        </td>
+        <td>{{ data.adminEmail }}</td>
+        <td style="text-align: center">
+          <a (click)="gotoLinks(data)">{{ data.linksCount }}</a>
+        </td>
+        <td style="text-align: center">{{ data.active }}</td>
+        <td style="text-align: center; white-space: nowrap">
+          <a
+            nz-typography
+            nzType="warning"
+            (click)="
+              router.navigate(['dashboard', 'domain-update'], {
+                queryParams: { id: data.id }
+              })
+            "
+          >
+            <i
+              nz-icon
+              nzType="check-circle"
+              nzTheme="fill"
+              nz-tooltip
+              nzTooltipTitle="edit"
+            ></i>
+            edit
+          </a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a
+            nz-tooltip
+            nzTooltipTitle="delete"
+            nz-popconfirm
+            [nzPopconfirmTitle]="
+              'Are you sure delete ' + (data.home | domainName) + '?'
+            "
+            nzPopconfirmPlacement="left"
+            nzOkText="Delete"
+            nzCancelText="Cancel"
+            (nzOnConfirm)="delete(data.id)"
+            nz-typography
+            nzType="danger"
+          >
+            <i nz-icon nzType="close-circle" nzTheme="fill"></i> delete
+          </a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a
+            (click)="
+              router.navigate(['dashboard', 'domain-setting'], {
+                queryParams: { id: data.id }
+              })
+            "
+          >
+            <i
+              nz-icon
+              nzType="setting"
+              nzTheme="fill"
+              nz-tooltip
+              nzTooltipTitle="setting"
+            ></i>
+            setting
+          </a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a
+            nz-popconfirm
+            [nzPopconfirmTitle]="'Scrap ' + (data.home | domainName) + ' now?'"
+            nzPopconfirmPlacement="left"
+            nzOkText="Scrap"
+            nzCancelText="Cancel"
+            (nzOnConfirm)="scrap(data.id)"
+            nz-typography
+            nzType="success"
+          >
+            <i
+              nz-icon
+              nzType="robot"
+              nzTheme="fill"
+              nz-tooltip
+              nzTooltipTitle="scrap"
+            ></i>
+            scrap
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</ng-container>

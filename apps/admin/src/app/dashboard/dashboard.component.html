@@ -1,0 +1,72 @@
+<nz-layout>
+  <nz-header nzTheme="dark">
+    <nz-row>
+      <nz-col [nzSpan]="12" style="color: aliceblue; font-size: 1.3em">
+        <b>Web Scraper</b>
+      </nz-col>
+      <nz-col [nzSpan]="12" style="text-align: right">
+        <a (click)="signout()" style="margin-right: 16px">
+          <i nz-icon nzType="poweroff" nz-tooltip nzTooltipTitle="scrap"></i>
+          <span style="padding-left: 4px">Signout</span>
+        </a>
+      </nz-col>
+    </nz-row>
+  </nz-header>
+  <nz-content>
+    <div class="dashboard-stats" *ngIf="(jobCount$ | async) as jobCount">
+      <a routerLink="domain-list" class="dashboard-stat">
+        <div class="dashboard-stat-title">Domains</div>
+        <i nz-icon nzType="cloud" nzTheme="twotone"></i>
+        <span class="dashboard-stat-value">{{ jobCount.domain }}</span>
+      </a>
+      <a routerLink="content-list" class="dashboard-stat">
+        <div class="dashboard-stat-title">Contents</div>
+        <i nz-icon nzType="book" nzTheme="twotone"></i>
+        <span class="dashboard-stat-value">{{ jobCount.content }}</span>
+      </a>
+      <a
+        routerLink="jobs-list"
+        [queryParams]="{ status: 'created' }"
+        class="dashboard-stat"
+      >
+        <div class="dashboard-stat-title">Queues</div>
+        <i nz-icon nzType="schedule" nzTheme="twotone"></i>
+        <span class="dashboard-stat-value">{{ jobCount.created }}</span>
+      </a>
+      <a
+        routerLink="jobs-list"
+        [queryParams]="{ status: 'loading-failed' }"
+        class="dashboard-stat"
+      >
+        <div class="dashboard-stat-title">Loading Error</div>
+        <i nz-icon nzType="bug" nzTheme="twotone"></i>
+        <span class="dashboard-stat-value">{{ jobCount.loadingError }}</span>
+      </a>
+      <a
+        routerLink="jobs-list"
+        [queryParams]="{ status: 'scraping-failed' }"
+        class="dashboard-stat"
+      >
+        <div class="dashboard-stat-title">Scraping Error</div>
+        <i nz-icon nzType="bug" nzTheme="twotone"></i>
+        <span class="dashboard-stat-value">{{ jobCount.scrapingError }}</span>
+      </a>
+      <a
+        routerLink="jobs-list"
+        [queryParams]="{ status: 'success' }"
+        class="dashboard-stat"
+      >
+        <div class="dashboard-stat-title">Success</div>
+        <i nz-icon nzType="star" nzTheme="twotone"></i>
+        <span class="dashboard-stat-value">{{ jobCount.success }}</span>
+      </a>
+    </div>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer
+    >Web Scraper ©2021 Implement By
+    <a href="https://madipta.github.io" target="_blank">Madipta</a></nz-footer
+  >
+</nz-layout>

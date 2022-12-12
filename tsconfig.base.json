@@ -1,0 +1,46 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext.asynciterable"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@web-scraping/auth": [
+        "libs/auth/src/index.ts"
+      ],
+      "@web-scraping/gql": [
+        "libs/gql/src/index.ts"
+      ],
+      "@web-scraping/orm": [
+        "libs/orm/src/index.ts"
+      ],
+      "@web-scraping/pubsub": [
+        "libs/pubsub/src/index.ts"
+      ],
+      "@web-scraping/scrape-queue": [
+        "libs/scrape-queue/src/index.ts"
+      ],
+      "@web-scraping/scraper": [
+        "libs/scraper/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

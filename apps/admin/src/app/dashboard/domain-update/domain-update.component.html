@@ -1,0 +1,51 @@
+<nz-page-header
+  nzBackIcon
+  style="margin-bottom: 40px"
+  [nzTitle]="selectedId ? 'Domain Update' : 'Domain Register'"
+>
+</nz-page-header>
+<form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="home" nzRequired
+      >Domain url</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        nz-input
+        id="home"
+        formControlName="home"
+        placeholder="ex: https://madipta.github.io"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="adminEmail">
+      Admin email
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="The input is not valid E-mail!"
+    >
+      <input nz-input formControlName="adminEmail" id="adminEmail" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label
+      [nzSm]="6"
+      [nzXs]="24"
+      nzFor="active"
+      [nzNoColon]="true"
+    ></nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <label nz-checkbox formControlName="active">Active</label>
+      <label nz-checkbox formControlName="disabled">Disabled</label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" *ngIf="!selectedId">Register</button>
+      <button nz-button nzType="primary" *ngIf="selectedId">Update</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
